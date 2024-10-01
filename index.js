@@ -86,6 +86,7 @@ function filterAndDisplayTasksByBoard(boardName) {
 
   elements.columnDivs.forEach(column => {
     const status = column.getAttribute("data-status");
+    console.log(status)
     // Reset column content while preserving the column title
     column.innerHTML = `<div class="column-head-div">
                           <span class="dot" id="${status}-dot"></span>
@@ -95,18 +96,8 @@ function filterAndDisplayTasksByBoard(boardName) {
     const tasksContainer = document.createElement("div");
     column.appendChild(tasksContainer);
 
-    filteredTasks.filter(task => task.status = status).forEach(task => { 
-      const taskElement = document.createElement("div");
-      taskElement.classList.add("task-div");
-      taskElement.textContent = task.title;
-      taskElement.setAttribute('data-task-id', task.id);
-
-      // Listen for a click event on each task and open a modal
-      taskElement.click() => { 
-        openEditTaskModal(task);
-      });
-
-      tasksContainer.appendChild(taskElement);
+    filteredTasks.filter(task => task.status == status).forEach(task => { 
+      addTaskToUI(task)
     });
   });
 }
