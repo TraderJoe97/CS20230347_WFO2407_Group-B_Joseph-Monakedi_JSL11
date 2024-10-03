@@ -171,7 +171,7 @@ function setupEventListeners() {
   elements.filterDiv.addEventListener('click', () => {
     toggleModal(false, elements.editTaskModal);
     toggleModal(false, elements.newTaskModal);
-    toggleBoardModal(false)
+    toggleBoardModal(false);
     elements.filterDiv.style.display = 'none'; // Also hide the filter overlay
   });
 
@@ -365,7 +365,7 @@ function editBoard(boardInput){
 
     // Set the newly edited board as active
   activeBoard = boardInput;
-  localStorage.setItem('activeBoard', boardInput);
+  localStorage.setItem('activeBoard', JSON.stringify(boardInput));
   elements.headerBoardName.textContent = boardInput;
 
   // Refresh the UI with updated board and tasks
@@ -387,7 +387,7 @@ function addBoard(boardInput) {
   boards.push(boardInput)
   // Set the newly created board as active
   activeBoard = boardInput;
-  localStorage.setItem('activeBoard', boardInput);
+  localStorage.setItem('activeBoard', JSON.stringify(boardInput));
   elements.headerBoardName.textContent = boardInput;
 
   // Refresh the UI with updated board and tasks
