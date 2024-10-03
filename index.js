@@ -32,6 +32,8 @@ const elements = {
   editTaskTitle: document.getElementById('edit-task-title-input'),
   editTaskDescInput: document.getElementById('edit-task-desc-input'),
   editSelectStatus: document.getElementById('edit-select-status'),
+  saveTaskBtn: document.getElementById('save-task-changes-btn'),
+  deleteTaskBtn: document.getElementById('delete-task-btn'),
 
 }
 
