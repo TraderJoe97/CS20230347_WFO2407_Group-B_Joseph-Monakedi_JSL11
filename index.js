@@ -151,38 +151,45 @@ function addTaskToUI(task) {
 function setupEventListeners() {
   // Cancel editing task event listener
   const cancelEditBtn = document.getElementById('cancel-edit-btn');
-  cancelEditBtn.click() => toggleModal(false, elements.editTaskModal));
+  cancelEditBtn.addEventListener('click',() => {
+    toggleModal(false, elements.editTaskModal);
+    elements.filterDiv.style.display = 'none';
+  });
 
   // Cancel adding new task event listener
   const cancelAddTaskBtn = document.getElementById('cancel-add-task-btn');
   cancelAddTaskBtn.addEventListener('click', () => {
-    toggleModal(false);
+    toggleModal(false, elements.newTaskModal);
     elements.filterDiv.style.display = 'none'; // Also hide the filter overlay
   });
 
   // Clicking outside the modal to close it
   elements.filterDiv.addEventListener('click', () => {
-    toggleModal(false);
+    toggleModal(false, elements.editTaskModal);
+    toggleModal(false, elements.newTaskModal)
     elements.filterDiv.style.display = 'none'; // Also hide the filter overlay
   });
 
   // Show sidebar event listener
-  elements.hideSideBarBtn.click() => toggleSidebar(false));
-  elements.showSideBarBtn.click() => toggleSidebar(true));
+  elements.hideSideBarBtn.addEventListener('click',() => toggleSidebar(false));
+  elements.showSideBarBtn.addEventListener('click',() => toggleSidebar(true));
 
   // Theme switch event listener
   elements.themeSwitch.addEventListener('change', toggleTheme);
 
   // Show Add New Task Modal event listener
   elements.createNewTaskBtn.addEventListener('click', () => {
-    toggleModal(true);
+    toggleModal(true, elements.newTaskModal);
     elements.filterDiv.style.display = 'block'; // Also show the filter overlay
   });
 
   // Add new task form submission event listener
-  elements.modalWindow.addEventListener('submit',  (event) => {
+  elements.newTaskModal.addEventListener('submit',  (event) => {
     addTask(event)
   });
+
+  // toggle edit board div
+  document.getElementById('edit-board-btn').addEventListener('click', toggleEditBoardDiv);
 }
 
 // Toggles tasks modal
