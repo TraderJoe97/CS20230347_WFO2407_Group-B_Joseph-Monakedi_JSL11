@@ -1451,3 +1451,7 @@ input:checked + #label-checkbox-theme:after {
   transform: translate(-50%, -50%);
   /* Other styles for the modal */
 }
+
+.button-group {
+  margin: 5px;
+}
