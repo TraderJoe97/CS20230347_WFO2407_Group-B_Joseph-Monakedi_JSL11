@@ -292,21 +292,126 @@ function openEditTaskModal(task) {
 }
 
 function saveTaskChanges(taskId) {
+    
   // Get new user inputs
-  
+    const titleInput = elements.editTaskTitle.value
+    const descInput = elements.editTaskDescInput.value
+    const statusInput = elements.editSelectStatus.value
 
   // Create an object with the updated task details
-
-
-  // Update task using a hlper functoin
- 
-
+    const newUserInputs = {
+      title: titleInput,
+      description: descInput,
+      status: statusInput
+    }
+    patchTask(taskId,newUserInputs);
+    toggleModal(false, elements.editTaskModal);
+    elements.filterDiv.style.display = 'none';
+    refreshTasksUI()
+  }  
   // Close the modal and refresh the UI to reflect the changes
 
-  refreshTasksUI();
+function toggleEditBoardDiv() {
+  const editBoardDiv = document.getElementById('editBoardDiv');
+  editBoardDiv.style.display = editBoardDiv.style.display === 'flex' ? 'none' : 'flex';
+  elements.createNewTaskBtn.style.display = editBoardDiv.style.display ==='flex' ? 'none' : 'block';
+}
+function toggleBoardModal(show) {
+  const modal = document.getElementById("board-modal-window");
+  modal.style.display = show ? 'block' : 'none';
 }
 
-/*************************************************************************************************************************************************/
+// Function to open the modal for adding or editing a board
+function openBoardModal(isEditing) {
+  const modalTitle = document.getElementById("board-modal-title");
+  const boardInput = document.getElementById("board-name-input");
+  const saveBoardBtn = document.getElementById("save-board-btn");
+
+  if (isEditing) {
+    modalTitle.textContent = "Edit Board";
+    boardInput.value = activeBoard;
+    saveBoardBtn.onclick = () => editBoard(boardInput.value);
+  } else {
+    modalTitle.textContent = "New Board";
+    boardInput.value = "";
+    saveBoardBtn.onclick = () => addBoard(boardInput.value);
+  }
+
+  toggleBoardModal(true);
+}
+
+document.getElementById('addBoardBtn').addEventListener('click', () => openBoardModal(false));
+document.getElementById('editBoardBtn').addEventListener('click', () => openBoardModal(true));
+document.getElementById('deleteBoardBtn').addEventListener('click', () => deleteBoard(activeBoard) )
+
+function editBoard(boardInput){
+  // Fetch tasks from local storage and update their board property
+  const tasks = getTasks();
+  const updatedTasks = tasks.map(task => {
+    if (task.board === activeBoard) {
+      task.board = boardInput;  // Update the task's board name
+    }
+    return task;
+    
+  });
+
+  // Save updated tasks back to local storage
+  saveTasks(updatedTasks);
+
+    // Set the newly edited board as active
+  activeBoard = boardInput;
+  localStorage.setItem('activeBoard', boardInput);
+  elements.headerBoardName.textContent = boardInput;
+
+  // Refresh the UI with updated board and tasks
+  const boards = [...new Set(tasks.map(task => task.board).filter(Boolean))];
+  displayBoards(boards);
+  styleActiveBoard(activeBoard)
+  filterAndDisplayTasksByBoard(boardInput);
+
+  // Close the board modal
+  toggleBoardModal(false);
+
+}
+
+function addBoard(boardInput) {
+  // get current boards
+  const tasks = getTasks();
+  const boards = [...new Set(tasks.map(task => task.board).filter(Boolean))];
+  boards.pushboardInput
+  // Set the newly created board as active
+  activeBoard = boardInput;
+  localStorage.setItem('activeBoard', boardInput);
+  elements.headerBoardName.textContent = boardInput;
+
+  // Refresh the UI with updated board and tasks
+  displayBoards(boards);
+  styleActiveBoard(activeBoard);
+  filterAndDisplayTasksByBoard(boardInput);
+
+  // Close the board modal
+  toggleBoardModal(false);
+}
+
+function deleteBoard (board) {
+  // Fetch tasks from local storage and filter out tasks that belong to the active board
+  const tasks = getTasks();
+  const updatedTasks = tasks.filter(task => task.board !== activeBoard);
+  saveTasks(updatedTasks);
+
+  const boards = [...new Set(updatedTasks.map(task => task.board).filter(Boolean))];
+  localStorage.setItem('activeBoard', boards[0]);
+  elements.headerBoardName.textContent = boardInput;
+
+  // Refresh the UI with updated board and tasks
+  displayBoards(boards);
+  styleActiveBoard(activeBoard);
+  filterAndDisplayTasksByBoard(boardInput);
+
+  // Close the board modal
+  toggleBoardModal(false);
+
+}
 
 document.addEventListener('DOMContentLoaded', function() {
   init(); // init is called after the DOM is fully loaded
