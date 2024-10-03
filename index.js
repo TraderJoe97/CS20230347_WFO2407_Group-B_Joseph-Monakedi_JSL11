@@ -162,11 +162,16 @@ function setupEventListeners() {
     toggleModal(false, elements.newTaskModal);
     elements.filterDiv.style.display = 'none'; // Also hide the filter overlay
   });
+  // Cancel edit/new board modal
+  elements.cancelBoardBtn.addEventListener('click', () => {
+    toggleBoardModal(false);
+  })
 
   // Clicking outside the modal to close it
   elements.filterDiv.addEventListener('click', () => {
     toggleModal(false, elements.editTaskModal);
-    toggleModal(false, elements.newTaskModal)
+    toggleModal(false, elements.newTaskModal);
+    toggleBoardModal(false)
     elements.filterDiv.style.display = 'none'; // Also hide the filter overlay
   });
 
@@ -364,13 +369,14 @@ function editBoard(boardInput){
   elements.headerBoardName.textContent = boardInput;
 
   // Refresh the UI with updated board and tasks
-  const boards = [...new Set(tasks.map(task => task.board).filter(Boolean))];
+  const boards = [...new Set(updatedTasks.map(task => task.board).filter(Boolean))];
   displayBoards(boards);
   styleActiveBoard(activeBoard)
   filterAndDisplayTasksByBoard(boardInput);
 
   // Close the board modal
   toggleBoardModal(false);
+  toggleEditBoardDiv(false);
 
 }
 
@@ -378,7 +384,7 @@ function addBoard(boardInput) {
   // get current boards
   const tasks = getTasks();
   const boards = [...new Set(tasks.map(task => task.board).filter(Boolean))];
-  boards.pushboardInput
+  boards.push(boardInput)
   // Set the newly created board as active
   activeBoard = boardInput;
   localStorage.setItem('activeBoard', boardInput);
@@ -391,25 +397,31 @@ function addBoard(boardInput) {
 
   // Close the board modal
   toggleBoardModal(false);
+  toggleEditBoardDiv(false);
+  // open create new task modal
+  toggleModal(true, elements.newTaskModal);
+  elements.filterDiv.style.display = 'block';
+
 }
 
 function deleteBoard (board) {
   // Fetch tasks from local storage and filter out tasks that belong to the active board
   const tasks = getTasks();
-  const updatedTasks = tasks.filter(task => task.board !== activeBoard);
+  const updatedTasks = tasks.filter(task => task.board !== board);
   saveTasks(updatedTasks);
 
   const boards = [...new Set(updatedTasks.map(task => task.board).filter(Boolean))];
-  localStorage.setItem('activeBoard', boards[0]);
-  elements.headerBoardName.textContent = boardInput;
+  localStorage.setItem('activeBoard', JSON.stringify(boards[0]));
+  activeBoard = boards[0]
+  elements.headerBoardName.textContent = activeBoard;
 
   // Refresh the UI with updated board and tasks
   displayBoards(boards);
   styleActiveBoard(activeBoard);
-  filterAndDisplayTasksByBoard(boardInput);
+  filterAndDisplayTasksByBoard(activeBoard);
 
   // Close the board modal
-  toggleBoardModal(false);
+  toggleEditBoardDiv(false);
 
 }
 
