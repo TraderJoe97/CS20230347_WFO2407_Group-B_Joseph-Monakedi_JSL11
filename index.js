@@ -31,10 +31,10 @@ const elements = {
   createNewTaskBtn: document.getElementById("add-new-task-btn"),
   editTaskTitle: document.getElementById('edit-task-title-input'),
   editTaskDescInput: document.getElementById('edit-task-desc-input'),
-  editSelectStatus: document.getElementById('edit-select-status'),
+  editSelectStatus: document.getElementById('edit-select-status'),  
   saveTaskBtn: document.getElementById('save-task-changes-btn'),
   deleteTaskBtn: document.getElementById('delete-task-btn'),
-
+  
 }
 
 let activeBoard = ""
@@ -141,7 +141,7 @@ function addTaskToUI(task) {
   const taskElement = document.createElement('div');
   taskElement.className = 'task-div';
   taskElement.textContent = task.title; // Modify as needed
-  taskElement.setAttribute('data-task-id', task.id);
+  taskElement.setAttribute('data-task-id', task.id);  
   taskElement.addEventListener('click', () => openEditTaskModal(task));
   tasksContainer.appendChild(taskElement); 
 }
@@ -232,7 +232,7 @@ function toggleSidebar(show) {
     elements.sideBarDiv.style.display = 'none';
     elements.showSideBarBtn.style.display = 'block'
     localStorage.setItem('showSideBar', 'false');
-}
+  }
 }
 function toggleTheme() {
   const logoImg = document.getElementById('logo')
@@ -247,14 +247,14 @@ function toggleTheme() {
   }
   console.log('theme toggled')
 }
-
+ 
 
 function openEditTaskModal(task) {
   // Set task details in modal inputs
   elements.editTaskTitle.value = task.title
   elements.editTaskDescInput.value = task.description
   elements.editSelectStatus.value = task.status
-  
+
    // Clone the buttons to remove previous event listeners
   const saveTaskBtnClone = elements.saveTaskBtn.cloneNode(true);
   const deleteTaskBtnClone = elements.deleteTaskBtn.cloneNode(true);
@@ -293,12 +293,12 @@ function openEditTaskModal(task) {
 
 function saveTaskChanges(taskId) {
     
-  // Get new user inputs
+    // Get new user inputs
     const titleInput = elements.editTaskTitle.value
     const descInput = elements.editTaskDescInput.value
     const statusInput = elements.editSelectStatus.value
 
-  // Create an object with the updated task details
+    // Create an object with the updated task details
     const newUserInputs = {
       title: titleInput,
       description: descInput,
