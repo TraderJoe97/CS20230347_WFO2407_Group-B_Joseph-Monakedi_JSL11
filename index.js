@@ -207,12 +207,14 @@ function addTask(event) {
 
   //Assign user input to the task object
     const task = {
-      
+      title: document.getElementById('title-input').value,
+      description: document.getElementById('desc-input').value,
+      status: document.getElementById('select-status').value,
+      board: activeBoard,
     };
     const newTask = createNewTask(task);
     if (newTask) {
-      addTaskToUI(newTask);
-      toggleModal(false);
+      toggleModal(false, elements.newTaskModal);
       elements.filterDiv.style.display = 'none'; // Also hide the filter overlay
       event.target.reset();
       refreshTasksUI();
@@ -221,7 +223,15 @@ function addTask(event) {
 
 
 function toggleSidebar(show) {
- 
+  console.log('clicked')
+  if (show) {
+    elements.sideBarDiv.style.display = 'flex';
+    elements.showSideBarBtn.style.display = 'none'
+    localStorage.setItem('showSideBar', 'true');
+  } else {
+    elements.sideBarDiv.style.display = 'none';
+    elements.showSideBarBtn.style.display = 'block'
+    localStorage.setItem('showSideBar', 'false');
 }
 
 function toggleTheme() {
