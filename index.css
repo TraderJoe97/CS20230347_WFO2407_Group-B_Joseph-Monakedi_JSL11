@@ -65,6 +65,7 @@ body {
 .boards-nav-links-div {
   display: flex;
   flex-direction: column;
+  flex-grow: 2;
   color: var(--primary-font-color);
   gap: 18px;
   height: 200px;
@@ -325,7 +326,7 @@ header {
   padding: 100px 0; /* Adjust padding as necessary */
 }
 
-#cancel-add-task-btn {
+#cancel-add-task-btn, {
   background-color: #ea5555;
 }
 
@@ -434,40 +435,36 @@ header {
   font-weight: 800;
 }
 
-#editBtnsDiv {
+.editBtnsDiv {
   border-radius: 5px;
   /* border: 2px solid red; */
   position: absolute;
   z-index: 3;
-  display: flex;
+  display: none;
   flex-direction: column;
-  top: 60px;
-  right: 20px;
+  top: 50px;
+  right: 50px;
   background: var(--secondary-color);
   align-items: flex-start;
   gap: 10px;
   justify-content: space-around;
   padding: 10px;
-  width: 130px;
-  display: none;
+  width: 130px
+
 }
 
 #editBoardDiv {
-  position: absolute;
-  /* z-index: 3; */
-  /* display: flex; */
-  flex-direction: column;
-  top: 110px;
-  right: 58px;
-  background: var(--primary-color);
+  z-index: 3;
+  display: none;
+  flex-direction: row;
+  /* background: var(--primary-color); */
   align-items: center;
   gap: 10px;
   justify-content: space-around;
   padding: 10px;
-  width: 120px;
-  height: 50px;
+  width: 420px;
+  height: 10px;
   border-radius: 8px;
-  display: none;
   z-index: 5;
 }
 
@@ -499,10 +496,26 @@ header {
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
+  padding: 5px;
 }
 
-#deleteBoardBtn {
+#deleteBoardBtn , #editBoardBtn ,#addBoardBtn {
   color: var(--primary-font-color);
+  background-color: var(--primary-color);
+  box-shadow: var(--primary-box-shadow);
+   display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-left: 15px;
+  width: 100%;
+  background-color: var(--primary-color);
+  color: var(--primary-font-color);
+  height: 90px;
+  border-radius: 12px;
+  box-shadow: var(--primary-box-shadow);
+  cursor: pointer;
+  margin-bottom: 15px;
 }
 
 .deleteBoardWindowBtns {
@@ -531,6 +544,15 @@ header {
 }
 
 .editBtns {
+  flex: 1; /* This allows the buttons to grow and fill the space equally */
+  margin: 0 5px; /* This adds spacing between the buttons */
+  background: none;
+  border: none;
+  color: var(--secondary-font-color);
+  font-size: 16px;
+  cursor: pointer;
+}
+.editBtnsDiv {
   flex: 1; /* This allows the buttons to grow and fill the space equally */
   margin: 0 5px; /* This adds spacing between the buttons */
   background: none;
@@ -984,7 +1006,7 @@ input:checked + #label-checkbox-theme:after {
     font-size: 0;
     padding: 12px;
   }
-
+ 
   #editBoardDiv {
     margin: 0;
     top: 85px;
@@ -994,7 +1016,7 @@ input:checked + #label-checkbox-theme:after {
     padding: 20px;
     width: 80px;
     height: 30px;
-  }
+  } 
 
   .header-board-name {
   font-family: 'IBM Plex Sans', sans-serif;
@@ -1005,7 +1027,7 @@ input:checked + #label-checkbox-theme:after {
 }
 
 
-  #deleteBoardBtn {
+  #deleteBoardBtn , #editBoardBtn ,#addBoardBtn {
     font-size: 12px;
     font-weight: 500;
   }
@@ -1237,18 +1259,18 @@ input:checked + #label-checkbox-theme:after {
   }
 
   #editBoardDiv {
-    margin: 0;
-    /* border: 2px solid red; */
+    margin: 5;
+    border: 30px solid red;
     top: 85px;
     right: 10px;
     bottom: 0;
     z-index: 6;
     padding: 20px;
     width: 80px;
-    height: 30px;
+    height: 150px;
   }
 
-  #deleteBoardBtn {
+  #deleteBoardBtn , #editBoardBtn ,#addBoardBtn{
     font-size: 12px;
     font-weight: 500;
   }
@@ -1421,4 +1443,11 @@ input:checked + #label-checkbox-theme:after {
   .modal-window {
     width: 30%;
   }
+}
+.modal-window {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Other styles for the modal */
 }
