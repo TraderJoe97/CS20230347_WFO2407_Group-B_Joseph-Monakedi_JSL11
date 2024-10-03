@@ -44,7 +44,7 @@ let activeBoard = ""
 function fetchAndDisplayBoardsAndTasks() {
   const tasks = getTasks();
   console.log(tasks)
-  const boards = [...new Set(tasks.map(task => task.board))];
+  const boards = [...new Set(tasks.map(task => task.board).filter(Boolean))];
   console.log(boards)
   displayBoards(boards);
   if (boards.length > 0) {
