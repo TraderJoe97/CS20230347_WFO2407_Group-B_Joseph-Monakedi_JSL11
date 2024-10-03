@@ -233,11 +233,20 @@ function toggleSidebar(show) {
     elements.showSideBarBtn.style.display = 'block'
     localStorage.setItem('showSideBar', 'false');
 }
-
-function toggleTheme() {
- 
 }
-
+function toggleTheme() {
+  const logoImg = document.getElementById('logo')
+  if (elements.themeSwitch.checked){
+    document.body.classList.toggle('light-theme', true);
+    localStorage.setItem('light-theme', 'enabled');
+    logoImg.src = 'assets/logo-light.svg';
+  } else {
+    document.body.classList.toggle('light-theme', false)
+    localStorage.setItem('light-theme', 'disabled');
+    logoImg.src = 'assets/logo-dark.svg';
+  }
+  console.log('theme toggled')
+}
 
 
 function openEditTaskModal(task) {
