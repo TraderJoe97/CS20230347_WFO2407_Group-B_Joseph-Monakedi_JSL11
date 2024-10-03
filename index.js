@@ -251,18 +251,44 @@ function toggleTheme() {
 
 function openEditTaskModal(task) {
   // Set task details in modal inputs
+  elements.editTaskTitle.value = task.title
+  elements.editTaskDescInput.value = task.description
+  elements.editSelectStatus.value = task.status
   
+   // Clone the buttons to remove previous event listeners
+  const saveTaskBtnClone = elements.saveTaskBtn.cloneNode(true);
+  const deleteTaskBtnClone = elements.deleteTaskBtn.cloneNode(true);
 
-  // Get button elements from the task modal
+  // Replace the original buttons with their clones
+  elements.saveTaskBtn.replaceWith(saveTaskBtnClone);
+  elements.deleteTaskBtn.replaceWith(deleteTaskBtnClone);
 
+  // Reassign the cloned buttons to the `elements` object
+  elements.saveTaskBtn = saveTaskBtnClone;
+  elements.deleteTaskBtn = deleteTaskBtnClone;
 
   // Call saveTaskChanges upon click of Save Changes button
- 
+  elements.saveTaskBtn.addEventListener('click', saveTaskChangesHandler);
 
   // Delete task using a helper function and close the task modal
+  elements.deleteTaskBtn.addEventListener('click', deleteTaskHandler)
 
+  function saveTaskChangesHandler () {
+    saveTaskChanges(task.id)
+  }
+
+  function deleteTaskHandler() {
+    const confirmed = confirm('Are you sure you want to delete this task?')
+    if (confirmed){
+      deleteTask(task.id);
+    } 
+    toggleModal(false, elements.editTaskModal);
+    elements.filterDiv.style.display = 'none';
+    refreshTasksUI();
+  }
 
   toggleModal(true, elements.editTaskModal); // Show the edit task modal
+  elements.filterDiv.style.display = 'block';
 }
 
 function saveTaskChanges(taskId) {
