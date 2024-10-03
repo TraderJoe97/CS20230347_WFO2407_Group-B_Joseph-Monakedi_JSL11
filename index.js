@@ -34,7 +34,7 @@ const elements = {
   editSelectStatus: document.getElementById('edit-select-status'),  
   saveTaskBtn: document.getElementById('save-task-changes-btn'),
   deleteTaskBtn: document.getElementById('delete-task-btn'),
-  
+  cancelBoardBtn: document.getElementById('cancel-board-btn'),
 }
 
 let activeBoard = ""
