@@ -399,21 +399,25 @@ function addBoard(boardInput) {
 }
 
 function deleteBoard (board) {
-  // Fetch tasks from local storage and filter out tasks that belong to the active board
-  const tasks = getTasks();
-  const updatedTasks = tasks.filter(task => task.board !== board);
-  saveTasks(updatedTasks);
+  const confirmed = confirm('Are you sure you want to delete this board?')
+    if (confirmed){
+      // Fetch tasks from local storage and filter out tasks that belong to the active board
+      const tasks = getTasks();
+      const updatedTasks = tasks.filter(task => task.board !== board);
+      saveTasks(updatedTasks);
 
-  const boards = [...new Set(updatedTasks.map(task => task.board).filter(Boolean))];
-  localStorage.setItem('activeBoard', JSON.stringify(boards[0]));
-  activeBoard = boards[0]
-  elements.headerBoardName.textContent = activeBoard;
+      const boards = [...new Set(updatedTasks.map(task => task.board).filter(Boolean))];
+      localStorage.setItem('activeBoard', JSON.stringify(boards[0]));
+      activeBoard = boards[0]
+      elements.headerBoardName.textContent = activeBoard;
 
-  // Refresh the UI with updated board and tasks
-  displayBoards(boards);
-  styleActiveBoard(activeBoard);
-  filterAndDisplayTasksByBoard(activeBoard);
+      // Refresh the UI with updated board and tasks
+      displayBoards(boards);
+      styleActiveBoard(activeBoard);
+      filterAndDisplayTasksByBoard(activeBoard);
 
+    } 
+  
   // Close the board modal
   toggleEditBoardDiv(false);
 
