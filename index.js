@@ -43,13 +43,10 @@ let activeBoard = ""
 // TASK: FIX BUGS
 function fetchAndDisplayBoardsAndTasks() {
   const tasks = getTasks();
-  console.log(tasks)
   const boards = [...new Set(tasks.map(task => task.board).filter(Boolean))];
-  console.log(boards)
   displayBoards(boards);
   if (boards.length > 0) {
     const localStorageBoard = JSON.parse(localStorage.getItem("activeBoard"))
-    console.log(localStorageBoard)
     activeBoard = localStorageBoard ? localStorageBoard :  boards[0]; 
     elements.headerBoardName.textContent = activeBoard
     styleActiveBoard(activeBoard)
@@ -82,14 +79,12 @@ function displayBoards(boards) {
 // TASK: Fix Bugs
 function filterAndDisplayTasksByBoard(boardName) {
   const tasks = getTasks(); // Fetch tasks from a simulated local storage function
-  if (tasks) {console.log("got tasks")}
   const filteredTasks = tasks.filter(task => task.board === boardName);
 
   // Ensure the column titles are set outside of this function or correctly initialized before this function runs
 
   elements.columnDivs.forEach(column => {
     const status = column.getAttribute("data-status");
-    console.log(status)
     // Reset column content while preserving the column title
     column.innerHTML = `<div class="column-head-div">
                           <span class="dot" id="${status}-dot"></span>
@@ -228,7 +223,6 @@ function addTask(event) {
 
 
 function toggleSidebar(show) {
-  console.log('clicked')
   if (show) {
     elements.sideBarDiv.style.display = 'flex';
     elements.showSideBarBtn.style.display = 'none'
@@ -250,7 +244,6 @@ function toggleTheme() {
     localStorage.setItem('light-theme', 'disabled');
     logoImg.src = 'assets/logo-dark.svg';
   }
-  console.log('theme toggled')
 }
  
 
@@ -433,7 +426,6 @@ function init() {
   initializeData();
   setupEventListeners();
   const showSidebar = localStorage.getItem('showSideBar') === 'true';
-  console.log(showSidebar);
   toggleSidebar(showSidebar);
   const isLightTheme = localStorage.getItem('light-theme') === 'enabled';
   document.body.classList.toggle('light-theme', isLightTheme);
