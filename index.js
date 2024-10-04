@@ -336,6 +336,7 @@ function openBoardModal(isEditing) {
   }
 
   toggleBoardModal(true);
+  elements.filterDiv.style.display = 'block';
 }
 
 document.getElementById('addBoardBtn').addEventListener('click', () => openBoardModal(false));
