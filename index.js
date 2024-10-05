@@ -212,6 +212,9 @@ function addTask(event) {
       status: document.getElementById('select-status').value,
       board: activeBoard,
     };
+    if (!task.title) { 
+      alert("Please enter task title");
+      return; } 
     const newTask = createNewTask(task);
     if (newTask) {
       toggleModal(false, elements.newTaskModal);
