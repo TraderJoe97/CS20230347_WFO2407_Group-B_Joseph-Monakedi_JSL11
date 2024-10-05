@@ -378,6 +378,10 @@ function editBoard(boardInput){
 }
 
 function addBoard(boardInput) {
+  if (!boardInput) {
+    alert("Please enter board name")
+    return;
+  }
   // get current boards
   const tasks = getTasks();
   const boards = [...new Set(tasks.map(task => task.board).filter(Boolean))];
